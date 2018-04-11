@@ -1,0 +1,9 @@
+eight_points_guzzle:
+    clients:
+        gwentup:
+            base_url: "https://gwentup.com"
+            options:
+                timeout: 30
+                headers:
+                    User-Agent: "Nightbot/1.0"
+            plugin: ~
