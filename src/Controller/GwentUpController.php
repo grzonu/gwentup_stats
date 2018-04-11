@@ -50,7 +50,7 @@ class GwentUpController extends Controller
         foreach($currentSeasons as $s) {
             $sData = $seasonsStats[$s['_id']];
             $games = $sData['Win'] + $sData['Lose'] + $sData['Draw'];
-            $winrate = round($sData['Win'] / $games, 2);
+            $winrate = round(($sData['Win'] / $games) * 100, 2);
 
             $winrates[] = $types[$sData['OnlineMode']] . ': ' . $winrate .'% '  . '(W:'.$sData['Win'] .' L:'. $sData['Lose']. ' D:' .$sData['Draw'].')';
         }
