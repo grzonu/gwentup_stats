@@ -55,7 +55,7 @@ class GwentUpController extends Controller {
 
             $winrates[] = $types[$sData['OnlineMode']] . ': ' . $winrate . '% ' . '(W:' . $sData['Win'] . ' L:' . $sData['Lose'] . ' D:' . $sData['Draw'] . ')';
         }
-        return new Response(implode("<br />", $winrates));
+        return new Response(implode("     ", $winrates));
     }
 
     /**
@@ -99,7 +99,7 @@ class GwentUpController extends Controller {
             $sData = $seasonsStats[$s['_id']];
             $winrates[] = $types[$sData['OnlineMode']] . ': MMR: ' . $sData['Mmr'] . ' Pozycja: ' . $sData['Position'];
         }
-        return new Response(implode("<br />", $winrates));
+        return new Response(implode("     ", $winrates));
     }
 
     protected function shortUrl($url, $login, $token) {
@@ -204,7 +204,7 @@ class GwentUpController extends Controller {
             $row = $deck['frakcja'] . '|' . $deck['leader'] . ' ' . $deck['GwentDeckName'] . '(WR: ' . $deck['winrate'] . '%) ' . $shortUrl;
             $ret[] = $row;
         }
-        return new Response(implode("<br />", $ret));
+        return new Response(implode("     ", $ret));
     }
 
 }
