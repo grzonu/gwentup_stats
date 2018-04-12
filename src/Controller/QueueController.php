@@ -106,10 +106,7 @@ class QueueController extends Controller
             $items = $em->createQuery("SELECT p FROM App:QueueItem p WHERE p.created > :today AND p.username = :name")
                 ->setParameter('name', $name)
                 ->setParameter('today', $dt)
-                ->getResult();
-            if (count($items) > 0) {
-                return new Response("Jesteś już zapisany", 200);
-            }
+                ->getResult();            
             foreach ($items as $item) {
                 $em->remove($item);
             }
