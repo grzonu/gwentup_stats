@@ -20,7 +20,7 @@ class QueueController extends Controller
             $header = $request->headers->get("Nightbot-User");
             $parts = [];
             parse_str($header, $parts);
-            $name = $parts['name'];
+            $name = $parts['displayName'];
             $provider = $parts['provider'];
             if (empty($name) || empty($provider)) {
                 error_log($header);
@@ -58,7 +58,7 @@ class QueueController extends Controller
             $header = $request->headers->get("Nightbot-User");
             $parts = [];
             parse_str($header, $parts);
-            $name = $parts['name'];
+            $name = $parts['displayName'];
             $provider = $parts['provider'];
             $level = $parts['userLevel'];
             if (empty($name) || empty($provider) || empty($level)) {
@@ -95,7 +95,7 @@ class QueueController extends Controller
             $header = $request->headers->get("Nightbot-User");
             $parts = [];
             parse_str($header, $parts);
-            $name = $parts['name'];
+            $name = $parts['displayName'];
             $provider = $parts['provider'];
             if (empty($name) || empty($provider)) {
                 error_log($header);
