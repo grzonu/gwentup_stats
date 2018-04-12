@@ -18,7 +18,8 @@ class QueueController extends Controller
         $em = $this->getDoctrine()->getManager();
         if ($request->headers->has("Nightbot-User")) {
             $header = $request->headers->get("Nightbot-User");
-            $parts = parse_str($header);
+            $parts = [];
+            parse_str($header, $parts);
             $name = $parts['name'];
             $provider = $parts['provider'];
             if (empty($name) || empty($provider)) {
@@ -55,7 +56,8 @@ class QueueController extends Controller
         $em = $this->getDoctrine()->getManager();
         if ($request->headers->has("Nightbot-User")) {
             $header = $request->headers->get("Nightbot-User");
-            $parts = parse_str($header);
+            $parts = [];
+            parse_str($header, $parts);
             $name = $parts['name'];
             $provider = $parts['provider'];
             $level = $parts['userLevel'];
@@ -91,7 +93,8 @@ class QueueController extends Controller
         $em = $this->getDoctrine()->getManager();
         if ($request->headers->has("Nightbot-User")) {
             $header = $request->headers->get("Nightbot-User");
-            $parts = parse_str($header);
+            $parts = [];
+            parse_str($header, $parts);
             $name = $parts['name'];
             $provider = $parts['provider'];
             if (empty($name) || empty($provider)) {
