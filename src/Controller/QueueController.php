@@ -22,7 +22,8 @@ class QueueController extends Controller
             $name = $parts['name'];
             $provider = $parts['provider'];
             if (empty($name) || empty($provider)) {
-                return new Response('Brak wymaganych parametrów', 400);
+                error_log($header);
+                return new Response('Brak wymaganych parametrów', 401);
             }
             $dt = new \DateTime();
             $dt->setTime(0, 0, 0);
@@ -59,7 +60,8 @@ class QueueController extends Controller
             $provider = $parts['provider'];
             $level = $parts['userLevel'];
             if (empty($name) || empty($provider) || empty($level)) {
-                return new Response('Brak wymaganych parametrów', 400);
+                error_log($header);
+                return new Response('Brak wymaganych parametrów', 401);
             }
             if ($level != "owner") {
                 return new Response("Brak uprawnień", 403);
@@ -93,7 +95,8 @@ class QueueController extends Controller
             $name = $parts['name'];
             $provider = $parts['provider'];
             if (empty($name) || empty($provider)) {
-                return new Response('Brak wymaganych parametrów', 400);
+                error_log($header);
+                return new Response('Brak wymaganych parametrów', 401);
             }
             $dt = new \DateTime();
             $dt->setTime(0, 0, 0);
@@ -118,7 +121,7 @@ class QueueController extends Controller
     /**
      * @Route("/queue/list", name="queue_list")
      */
-    public function list(Request $request)
+    public function queue_list(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $dt = new \DateTime();
