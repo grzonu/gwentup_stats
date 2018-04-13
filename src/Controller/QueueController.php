@@ -134,6 +134,9 @@ class QueueController extends Controller
         foreach($items as $item) {
             $ret[] = $i . '. ' . $item->getUsername();
         }
+        if(count($ret) == 0) {
+            return new Response("Lista jest pusta");
+        }
         return new Response(implode("     ", $ret));
     }
 }
