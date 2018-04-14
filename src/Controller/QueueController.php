@@ -133,6 +133,7 @@ class QueueController extends Controller
         $ret = [];
         foreach($items as $item) {
             $ret[] = $i . '. ' . $item->getUsername();
+            $i++;
         }
         if(count($ret) == 0) {
             return new Response("Lista jest pusta");
