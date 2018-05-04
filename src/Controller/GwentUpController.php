@@ -8,12 +8,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
-class GwentUpController extends Controller {
+class GwentUpController extends Controller
+{
 
     /**
-     * @Route("/gwentup/winrate/{id}", name="winrate")
+     * @Route("/gwentup/winrate/", name="winrate")
      */
-    public function winrate($id) {
+    public function winrate()
+    {
+        $id = $this->getParameter('gwentup_id');
         $client = $this->get('eight_points_guzzle.client.gwentup');
         $response = $client->get('api/player/' . $id);
         $content = $response->getBody()->getContents();
@@ -49,19 +52,23 @@ class GwentUpController extends Controller {
 
         $winrates = [];
         foreach ($currentSeasons as $s) {
-            $sData = $seasonsStats[$s['_id']];
-            $games = $sData['Win'] + $sData['Lose'] + $sData['Draw'];
-            $winrate = round(($sData['Win'] / $games) * 100, 2);
-
-            $winrates[] = $types[$sData['OnlineMode']] . ': ' . $winrate . '% ' . '(W:' . $sData['Win'] . ' L:' . $sData['Lose'] . ' D:' . $sData['Draw'] . ')';
+            if (isset($seasonsStats[$s['_id']])) {
+                $sData = $seasonsStats[$s['_id']];
+                $games = $sData['Win'] + $sData['Lose'] + $sData['Draw'];
+                $winrate = $games == 0 ? 0 : round(($sData['Win'] / $games) * 100, 2);
+                $winrates[] = $types[$sData['OnlineMode']] . ': ' . $winrate . '% ' . '(W:' . $sData['Win'] . ' L:' . $sData['Lose'] . ' D:' . $sData['Draw'] . ')';
+            }
         }
+
         return new Response(implode("     ", $winrates));
     }
 
     /**
-     * @Route("/gwentup/mmr/{id}", name="mmr")
+     * @Route("/gwentup/mmr/", name="mmr")
      */
-    public function mmr($id) {
+    public function mmr()
+    {
+        $id = $this->getParameter('gwentup_id');
         $client = $this->get('eight_points_guzzle.client.gwentup');
         $response = $client->get('api/player/' . $id);
         $content = $response->getBody()->getContents();
@@ -99,10 +106,12 @@ class GwentUpController extends Controller {
             $sData = $seasonsStats[$s['_id']];
             $winrates[] = $types[$sData['OnlineMode']] . ': MMR: ' . $sData['Mmr'] . ' Pozycja: ' . $sData['Position'];
         }
+
         return new Response(implode("     ", $winrates));
     }
 
-    protected function shortUrl($url, $login, $token) {
+    protected function shortUrl($url, $login, $token)
+    {
         $client = $this->get('eight_points_guzzle.client.bitly');
         $response = $client->get('/v3/shorten?login=' . $login . '&apiKey=' . $token . '&longUrl=' . urlencode($url));
         $content = $response->getBody()->getContents();
@@ -110,15 +119,18 @@ class GwentUpController extends Controller {
         if ($data['status_code'] == 200) {
             return $data['data']['url'];
         }
+
         return $url;
     }
 
     /**
-     * @Route("/gwentup/decklist/{id}", name="decklist")
+     * @Route("/gwentup/decklist/", name="decklist")
      */
-    public function decklist(Request $request, $id) {
-        $login = $request->query->get('login');
-        $token = $request->query->get('token');
+    public function decklist(Request $request)
+    {
+        $id = $this->getParameter('gwentup_id');
+        $login = $this->getParameter('bitly_login');
+        $token = $this->getParameter('bitly_token');
         $client = $this->get('eight_points_guzzle.client.gwentup');
         $response = $client->get('api/player/' . $id);
         $content = $response->getBody()->getContents();
@@ -183,7 +195,7 @@ class GwentUpController extends Controller {
                 }
             }
         }
-        usort($showDecks, function($a, $b) {
+        usort($showDecks, function ($a, $b) {
             return $b['winrate'] - $a['winrate'];
         });
         $ret = [];
@@ -204,6 +216,7 @@ class GwentUpController extends Controller {
             $row = $deck['frakcja'] . '|' . $deck['leader'] . ' ' . $deck['GwentDeckName'] . '(WR: ' . $deck['winrate'] . '%) ' . $shortUrl;
             $ret[] = $row;
         }
+
         return new Response(implode("     ", $ret));
     }
 
