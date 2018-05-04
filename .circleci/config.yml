@@ -1,0 +1,19 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: docker pull gitlab/dind:latest
+    steps:
+      - checkout
+      - run:
+          name: Build application Docker image
+          command: |
+            docker build -t grzonu/gwentup_stats:latest .
+      - run:
+          name: Login to hub
+          command: |
+            docker login -u $GITHUB_USER -p $GITHUB_PASS
+      - run:
+          name: Push image to hub
+          command: |
+            docker push grzonu/gwentup_stats:latest
