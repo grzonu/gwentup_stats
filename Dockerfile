@@ -35,8 +35,8 @@ RUN wget https://getcomposer.org/composer.phar && cp composer.phar /usr/bin/comp
 RUN composer install
 RUN useradd -s /bin/bash -u 1000 docker_user
 RUN chown -R docker_user:docker_user /var/www/gwent/
-USER docker_user
+#USER docker_user
 RUN php bin/console doctrine:database:create
 RUN php bin/console doctrine:schema:update --force
-ENTRYPOINT php bin/console server:run 8080
+ENTRYPOINT php bin/console server:run 80
 
