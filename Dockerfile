@@ -38,5 +38,5 @@ RUN chown -R docker_user:docker_user /var/www/gwent/
 USER docker_user
 RUN php bin/console doctrine:database:create
 RUN php bin/console doctrine:schema:update --force
-ENTRYPOINT php bin/console server:run 8080
+ENTRYPOINT php bin/console server:run 0.0.0.0:8080
 
