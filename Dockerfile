@@ -33,6 +33,9 @@ RUN apt-get update
 RUN apt-get install -y wget git zip unzip
 RUN wget https://getcomposer.org/composer.phar && cp composer.phar /usr/bin/composer && chmod 777 /usr/bin/composer
 RUN composer install
+RUN useradd -s /bin/bash -u 1000 docker_user
+RUN chown -R docker_user:docker_user /var/www/gwent/
+USER docker_user
 RUN php bin/console doctrine:database:create
 RUN php bin/console doctrine:schema:update --force
 ENTRYPOINT php bin/console server:run 8080
