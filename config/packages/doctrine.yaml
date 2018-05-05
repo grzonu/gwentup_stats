@@ -5,6 +5,7 @@ doctrine:
         dbname:   "%env(MYSQL_DB_NAME)%"
         user:     "%env(MYSQL_DB_USER)%"
         password: "%env(MYSQL_DB_PASS)%"
+        port: 3306
         server_version: 5.7
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
