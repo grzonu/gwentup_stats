@@ -3,7 +3,10 @@ FROM library/php:latest
 ENV GWENT_ID 123
 ENV BITLY_LOGIN "example"
 ENV BITLY_TOKEN "example"
-ENV DB_PATH "/var/www/gwent/db"
+ENV DB_HOST "localhost"
+ENV DB_USER "root"
+ENV DB_PASS "gwent_stats"
+ENV DB_NAME "gwent_stats"
 ENV APP_ENV "dev"
 
 WORKDIR /var
