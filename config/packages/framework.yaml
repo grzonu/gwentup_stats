@@ -13,3 +13,4 @@ parameters:
     gwentup_id: "%env(GWENT_ID)%"
     bitly_login: "%env(BITLY_LOGIN)%"
     bitly_token: "%env(BITLY_TOKEN)%"
+    db_path: "%env(DB_PATH)%"

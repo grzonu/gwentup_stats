@@ -3,6 +3,7 @@ FROM library/php:latest
 ENV GWENT_ID 123
 ENV BITLY_LOGIN "example"
 ENV BITLY_TOKEN "example"
+ENV DB_PATH "/var/www/gwent/db"
 ENV APP_ENV "dev"
 
 WORKDIR /var
@@ -23,7 +24,8 @@ COPY composer.json /var/www/gwent/composer.json
 COPY composer.lock /var/www/gwent/composer.lock
 COPY symfony.lock /var/www/gwent/symfony.lock
 COPY phpunit.xml.dist /var/www/gwent/phpunit.xml.dist
-
+COPY run.sh /run.sh
+RUN chmod 777 /run.sh
 RUN chmod 777 /var/www/gwent/var/cache
 RUN chmod 777 /var/www/gwent/var/log
 RUN chmod 777 /var/www/gwent/var/sessions
@@ -36,7 +38,5 @@ RUN composer install
 RUN useradd -s /bin/bash -u 1000 docker_user
 RUN chown -R docker_user:docker_user /var/www/gwent/
 USER docker_user
-RUN php bin/console doctrine:database:create
-RUN php bin/console doctrine:schema:update --force
-ENTRYPOINT php bin/console server:run 0.0.0.0:8080
+ENTRYPOINT /run.sh
 
