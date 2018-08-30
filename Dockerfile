@@ -8,6 +8,7 @@ ENV MYSQL_DB_USER "root"
 ENV MYSQL_DB_PASS "gwent_stats"
 ENV MYSQL_DB_NAME "gwent_stats"
 ENV APP_ENV "dev"
+ENV PORT 8080
 
 WORKDIR /var
 RUN mkdir /var/www/
