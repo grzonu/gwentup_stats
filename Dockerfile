@@ -43,5 +43,5 @@ RUN useradd -s /bin/bash -u 1000 docker_user
 RUN chown -R docker_user:docker_user /var/www/gwent/
 USER docker_user
 RUN whoami
-ENTRYPOINT /run.sh
+CMD /run.sh
 
