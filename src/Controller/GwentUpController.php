@@ -103,8 +103,10 @@ class GwentUpController extends Controller
 
         $winrates = [];
         foreach ($currentSeasons as $s) {
-            $sData = $seasonsStats[$s['_id']];
-            $winrates[] = $types[$sData['OnlineMode']] . ': MMR: ' . $sData['Mmr'] . ' Pozycja: ' . $sData['Position'];
+            if(isset($seasonsStats[$s['_id']])) {
+                $sData = $seasonsStats[$s['_id']];
+                $winrates[] = $types[$sData['OnlineMode']] . ': MMR: ' . $sData['Mmr'] . ' Pozycja: ' . $sData['Position'];
+            }
         }
 
         return new Response(implode("     ", $winrates));
